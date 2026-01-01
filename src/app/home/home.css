@@ -1,0 +1,23 @@
+ @keyframes bounce-slow {
+      0%, 100% {
+        transform: translateY(0) translateX(-50%);
+      }
+      50% {
+        transform: translateY(-15px) translateX(-50%);
+      }
+    }
+
+    .animate-bounce-slow {
+      animation: bounce-slow 3s infinite ease-in-out;
+    }
+
+    @keyframes ping {
+      75%, 100% {
+        transform: scale(2);
+        opacity: 0;
+      }
+    }
+
+    .animate-ping {
+      animation: ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+    }

@@ -1,22 +1,16 @@
 import { Component } from '@angular/core';
-import { NavbarComponent } from './navbar/navbar';
-import { HomeComponent } from './home/home';
-import { AboutComponent } from './about/about';
-import { SkillsComponent } from './skills/skills';
-import { ProjectsComponent } from './projects/projects';
-import { ContactComponent } from './contact/contact';
+import { Navbar } from './navbar/navbar';
+import { Home } from './home/home';
+import { About } from './about/about';
+import { Skills } from './skills/skills';
+import { Projects } from './projects/projects';
+import { Contact } from './contact/contact';
+import { Footer } from './footer/footer';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [
-    NavbarComponent,
-    HomeComponent,
-    AboutComponent,
-    SkillsComponent,
-    ProjectsComponent,
-    ContactComponent
-  ],
+  imports: [ Navbar, Home, About, Skills, Projects, Contact, Footer],
   template: `
     <div class="min-h-screen bg-white">
       <app-navbar />
@@ -25,12 +19,7 @@ import { ContactComponent } from './contact/contact';
       <app-skills />
       <app-projects />
       <app-contact />
-      
-      <footer class="bg-black text-white py-8 px-4 sm:px-6 lg:px-8">
-        <div class="max-w-6xl mx-auto text-center">
-          <p class="text-gray-400">© 2024 Mario Silva. All rights reserved.</p>
-        </div>
-      </footer>
+      <app-footer />
     </div>
   `
 })
