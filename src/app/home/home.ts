@@ -3,18 +3,26 @@ import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 @Component({
   selector: 'app-home',
   standalone: true,
-  templateUrl: './home.html', 
+  templateUrl: './home.html',
   styleUrls: ['./home.css'],
 })
 export class Home implements OnInit, OnDestroy {
   words = [
-    'Backend Developer',
-    'Frontend Developer',
-    'Gamer',
     'Full Stack Developer',
-    'Java Enjoyer',
-    'Problem Solver'
+    'Software Developer',
+    'Game Developer',
+    'IT Support Technician',
+    'Cybersecurity Enthusiast',
+    'Pentesting Enthusiast',
+    'Cloud-Focused Developer',
+    'Network & Systems Learner',
+    'Problem Solver',
+    'Analytical Thinker',
+    'Continuous Learner',
+    'Gamer',
+    'Content Creator'
   ];
+
 
   displayedText = '';
 
@@ -27,7 +35,7 @@ export class Home implements OnInit, OnDestroy {
   deletingSpeed = 50;
   delayBetweenWords = 1500;
 
-  constructor(private cdr: ChangeDetectorRef) {}
+  constructor(private cdr: ChangeDetectorRef) { }
 
   ngOnInit() {
     this.type();
