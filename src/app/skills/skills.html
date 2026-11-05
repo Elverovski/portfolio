@@ -1,87 +1,109 @@
-<section id="skills" class="py-16 sm:py-24 md:py-32 px-4 sm:px-6 lg:px-8 bg-white relative overflow-hidden">
-  <!-- Decorative background -->
-  <div class="absolute inset-0 overflow-hidden pointer-events-none opacity-20">
-    <div class="absolute top-0 left-1/4 w-64 h-64 sm:w-96 sm:h-96 bg-gray-100 rounded-full blur-3xl"></div>
-    <div class="absolute bottom-0 right-1/4 w-64 h-64 sm:w-96 sm:h-96 bg-gray-50 rounded-full blur-3xl"></div>
-  </div>
+<section id="skills" class="py-24 sm:py-32 px-4 sm:px-6 lg:px-8 bg-white">
+  <div class="container-site">
+    <app-section-header
+      index="02"
+      label="Skills"
+      title="Skills & Technologies"
+      subtitle="Tools and technologies I use to bring ideas to life — and the ones I'm learning right now."
+    />
 
-  <div class="max-w-7xl mx-auto relative z-10">
-    <!-- Header -->
-    <div class="text-center mb-12 sm:mb-16 md:mb-20">
-      <h2 class="text-4xl sm:text-5xl md:text-6xl font-bold text-black mb-4 sm:mb-6">
-        Skills & Technologies
-      </h2>
-      <p class="text-lg sm:text-xl text-gray-600 max-w-2xl mx-auto px-4">
-        Tools and technologies I use to bring ideas to life
-      </p>
-    </div>
-
-    <div class="space-y-12 sm:space-y-16 md:space-y-20">
-      <div *ngFor="let category of categories; let i = index" 
-           class="animate-fade-in"
-           [style.animation-delay.ms]="i * 100">
-        
-        <!-- Category Header -->
-        <div class="flex items-center gap-3 sm:gap-4 mb-6 sm:mb-8">
-          <div class="flex-grow">
-            <h3 class="text-2xl sm:text-3xl font-bold text-black">
-              {{ category.title }}
-            </h3>
-          </div>
-          <div class="flex-shrink-0 h-0.5 sm:h-1 w-12 sm:w-16 bg-black"></div>
-          <div class="flex-shrink-0 text-xs sm:text-sm font-medium text-gray-400 whitespace-nowrap">
-            {{ category.skills.length }} {{ category.skills.length === 1 ? 'skill' : 'skills' }}
-          </div>
+    <!-- Currently learning: dashed border = "in progress", same language as the NEW chips below -->
+    <div
+      appReveal
+      class="border-2 border-dashed border-gray-300 bg-gray-50/60 p-6 sm:p-8 mb-10"
+    >
+      <div class="mb-6">
+        <div
+          class="flex items-center gap-2 font-mono text-xs uppercase tracking-[0.2em] text-gray-500 mb-2"
+        >
+          <span class="relative flex w-2 h-2">
+            <span class="absolute inset-0 rounded-full bg-green-500 animate-ping-slow"></span>
+            <span class="relative w-2 h-2 rounded-full bg-green-500"></span>
+          </span>
+          In progress
         </div>
+        <h3 class="text-2xl sm:text-3xl font-bold tracking-tight text-black">Currently Learning</h3>
+      </div>
 
-        <!-- Skills Grid -->
-        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3 sm:gap-4">
+      <div class="grid grid-cols-1 min-[420px]:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
+        @for (skill of learning; track skill.name) {
           <div
-            *ngFor="let skill of category.skills"
-            class="group relative flex flex-col items-center justify-center p-4 sm:p-6 bg-white
-                   border-2 border-gray-200 hover:border-black
-                   transition-all duration-300 cursor-pointer
-                   hover:shadow-xl hover:-translate-y-1"
+            class="group flex items-center gap-3 bg-white border border-gray-200 pl-3 pr-4 py-3 hover:border-black hover:-translate-y-0.5 hover:shadow-md transition-all duration-200"
           >
-            <!-- Icon Container -->
-            <div class="relative mb-3 sm:mb-4">
-              <div class="absolute inset-0 bg-black rounded-full blur-xl opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
-              <img
-                [src]="skill.icon"
-                [alt]="skill.name"
-                class="w-10 h-10 sm:w-14 sm:h-14 relative z-10
-                       group-hover:scale-125 transition-transform duration-300"
-              />
+            <img
+              [src]="skill.icon"
+              [alt]="skill.name"
+              loading="lazy"
+              class="w-8 h-8 object-contain shrink-0 group-hover:scale-110 transition-transform duration-200"
+            />
+            <div class="min-w-0">
+              <div class="font-semibold text-black leading-tight">{{ skill.name }}</div>
+              <div class="mt-0.5 font-mono text-[10px] uppercase tracking-[0.12em] text-gray-400 truncate">
+                {{ skill.area }}
+              </div>
             </div>
-
-            <!-- Skill Name -->
-            <span class="text-xs sm:text-sm font-semibold text-gray-700 text-center group-hover:text-black transition-colors duration-200">
-              {{ skill.name }}
-            </span>
-
-            <!-- Hover indicator -->
-            <div class="absolute bottom-0 left-0 right-0 h-0.5 sm:h-1 bg-black transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>
           </div>
-        </div>
+        }
       </div>
     </div>
 
-    <!-- Stats Section -->
-    <div class="mt-16 sm:mt-20 md:mt-24 pt-12 sm:pt-16 border-t-2 border-gray-200">
-      <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8 text-center">
-        <div class="p-4 sm:p-6">
-          <div class="text-4xl sm:text-5xl font-bold text-black mb-2">{{ getTotalSkills() }}</div>
-          <div class="text-sm sm:text-base text-gray-600 font-medium">Total Skills</div>
+    <!-- Categories -->
+    <div class="grid md:grid-cols-2 gap-5">
+      @for (category of categories; track category.title; let i = $index) {
+        <div appReveal [revealDelay]="(i % 2) * 90" class="md:[&:last-child:nth-child(odd)]:col-span-2">
+          <div
+            class="h-full bg-white border-2 border-gray-200 hover:border-black transition-colors duration-300 p-5 sm:p-6"
+          >
+            <h3 class="text-lg sm:text-xl font-bold text-black mb-5">{{ category.title }}</h3>
+
+            <div class="flex flex-wrap gap-2">
+              @for (skill of category.skills; track skill.name) {
+                <div
+                  class="group flex items-center gap-2 pl-2.5 pr-3 py-2 border bg-white hover:border-black hover:-translate-y-0.5 hover:shadow-md transition-all duration-200 cursor-default"
+                  [class.border-gray-200]="!skill.learning"
+                  [class.border-dashed]="skill.learning"
+                  [class.border-gray-400]="skill.learning"
+                  [title]="skill.learning ? skill.name + ' — currently learning' : skill.name"
+                >
+                  <img
+                    [src]="skill.icon"
+                    alt=""
+                    [class.icon-mono]="skill.mono"
+                    loading="lazy"
+                    class="w-5 h-5 object-contain group-hover:scale-110 transition-transform duration-200"
+                  />
+                  <span class="text-sm font-medium text-gray-700 group-hover:text-black">{{
+                    skill.name
+                  }}</span>
+                  @if (skill.learning) {
+                    <span
+                      class="ml-0.5 font-mono text-[10px] uppercase tracking-wider px-1.5 py-0.5 bg-black text-white"
+                      >New</span
+                    >
+                  }
+                </div>
+              }
+            </div>
+          </div>
         </div>
-        <div class="p-4 sm:p-6">
-          <div class="text-4xl sm:text-5xl font-bold text-black mb-2">{{ categories.length }}</div>
-          <div class="text-sm sm:text-base text-gray-600 font-medium">Categories</div>
+      }
+    </div>
+
+    <!-- Stats -->
+    <div
+      appReveal
+      class="mt-16 grid grid-cols-2 md:grid-cols-4 gap-0.5 bg-black border-2 border-black"
+    >
+      @for (stat of stats; track stat.label) {
+        <div class="bg-white px-3 py-6 sm:p-8 text-center">
+          <div class="text-4xl sm:text-5xl font-bold tracking-tight text-black">
+            {{ stat.value }}
+          </div>
+          <div class="mt-2 font-mono text-[10px] sm:text-xs uppercase tracking-[0.12em] sm:tracking-[0.18em] text-gray-500">
+            {{ stat.label }}
+          </div>
         </div>
-        <div class="p-4 sm:p-6">
-          <div class="text-4xl sm:text-5xl font-bold text-black mb-2">3+</div>
-          <div class="text-sm sm:text-base text-gray-600 font-medium">Years Experience</div>
-        </div>
-      </div>
+      }
     </div>
   </div>
 </section>

@@ -1,76 +1,82 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnDestroy, OnInit, signal } from '@angular/core';
+import { ALL_SKILLS } from '../data/skills';
+import { PROFILE } from '../data/profile';
+import { scrollToSection } from '../shared/scroll';
+import { SocialIcon } from '../shared/social-icon';
+import { SocialLinkDirective } from '../shared/social-link.directive';
 
 @Component({
   selector: 'app-home',
-  standalone: true,
+  imports: [SocialIcon, SocialLinkDirective],
   templateUrl: './home.html',
   styleUrls: ['./home.css'],
 })
 export class Home implements OnInit, OnDestroy {
-  words = [
+  protected readonly profile = PROFILE;
+  /** Duplicated so the CSS marquee can loop seamlessly. */
+  protected readonly marquee = [...ALL_SKILLS, ...ALL_SKILLS];
+
+  private readonly words = [
+    'Backend Developer',
     'Full Stack Developer',
+    'Mobile Developer',
     'Software Developer',
     'Game Developer',
-    'IT Support Technician',
-    'Cybersecurity Enthusiast',
-    'Pentesting Enthusiast',
     'Cloud-Focused Developer',
-    'Network & Systems Learner',
+    'Cybersecurity Enthusiast',
+    'IT Support Technician',
     'Problem Solver',
-    'Analytical Thinker',
     'Continuous Learner',
-    'Gamer',
-    'Content Creator'
   ];
 
-
-  displayedText = '';
+  protected readonly displayedText = signal('');
 
   private wordIndex = 0;
   private charIndex = 0;
   private isDeleting = false;
-  private timeoutId: any;
+  private timeoutId?: ReturnType<typeof setTimeout>;
 
-  typingSpeed = 100;
-  deletingSpeed = 50;
-  delayBetweenWords = 1500;
+  private readonly typingSpeed = 85;
+  private readonly deletingSpeed = 40;
+  private readonly delayBetweenWords = 1600;
 
-  constructor(private cdr: ChangeDetectorRef) { }
-
-  ngOnInit() {
+  ngOnInit(): void {
+    const reduceMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+    if (reduceMotion) {
+      this.displayedText.set(this.words[0]);
+      return;
+    }
     this.type();
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     clearTimeout(this.timeoutId);
   }
 
-  private type() {
-    const currentWord = this.words[this.wordIndex];
+  protected go(id: string): void {
+    scrollToSection(id);
+  }
+
+  private type(): void {
+    const word = this.words[this.wordIndex];
+    let delay = this.isDeleting ? this.deletingSpeed : this.typingSpeed;
 
     if (!this.isDeleting) {
-      this.displayedText = currentWord.slice(0, this.charIndex + 1);
       this.charIndex++;
-
-      if (this.charIndex === currentWord.length) {
+      if (this.charIndex === word.length) {
         this.isDeleting = true;
-        this.timeoutId = setTimeout(() => this.type(), this.delayBetweenWords);
-      } else {
-        this.timeoutId = setTimeout(() => this.type(), this.typingSpeed);
+        delay = this.delayBetweenWords;
       }
     } else {
       this.charIndex--;
-      this.displayedText = currentWord.slice(0, this.charIndex);
-
       if (this.charIndex === 0) {
         this.isDeleting = false;
         this.wordIndex = (this.wordIndex + 1) % this.words.length;
-        this.timeoutId = setTimeout(() => this.type(), this.typingSpeed);
-      } else {
-        this.timeoutId = setTimeout(() => this.type(), this.deletingSpeed);
+        delay = this.typingSpeed * 3;
       }
     }
 
-    this.cdr.detectChanges();
+    this.displayedText.set(word.slice(0, this.charIndex));
+    this.timeoutId = setTimeout(() => this.type(), delay);
   }
 }

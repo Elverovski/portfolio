@@ -1,96 +1,203 @@
-    <nav class="fixed top-0 w-full bg-white/95 backdrop-blur-sm border-b border-gray-200 z-50">
-      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between items-center h-16">
-          <!-- Logo -->
-          <a (click)="scrollTo('home')" 
-             class="text-2xl font-bold text-black cursor-pointer hover:opacity-70 transition-opacity duration-200">
-            Elverovski
-          </a>
+<header
+  class="fixed top-0 inset-x-0 z-50 border-b transition-[background-color,border-color,backdrop-filter] duration-300"
+  [class]="
+    scrolled() || menuOpen()
+      ? 'bg-white/85 backdrop-blur-md border-gray-200'
+      : 'bg-transparent border-transparent'
+  "
+>
+  <nav class="px-4 sm:px-6 lg:px-8" aria-label="Main">
+    <div class="container-site flex justify-between items-center h-16">
+      <!-- Logo -->
+      <button
+        type="button"
+        (click)="go('home')"
+        class="py-2 text-xl font-bold tracking-tight text-black hover:opacity-70 transition-opacity duration-200"
+      >
+        {{ profile.brand }}
+      </button>
 
-          <!-- Desktop Navigation -->
-          <div class="hidden md:flex items-center space-x-8">
-            <a (click)="scrollTo('home')" 
-               class="relative text-gray-700 hover:text-black cursor-pointer transition-colors duration-200 font-medium group">
-              Home
-              <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-black group-hover:w-full transition-all duration-200"></span>
-            </a>
-            <a (click)="scrollTo('about')" 
-               class="relative text-gray-700 hover:text-black cursor-pointer transition-colors duration-200 font-medium group">
-              About
-              <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-black group-hover:w-full transition-all duration-200"></span>
-            </a>
-            <a (click)="scrollTo('skills')" 
-               class="relative text-gray-700 hover:text-black cursor-pointer transition-colors duration-200 font-medium group">
-              Skills
-              <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-black group-hover:w-full transition-all duration-200"></span>
-            </a>
-            <a (click)="scrollTo('projects')" 
-               class="relative text-gray-700 hover:text-black cursor-pointer transition-colors duration-200 font-medium group">
-              Projects
-              <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-black group-hover:w-full transition-all duration-200"></span>
-            </a>
-            <a (click)="scrollTo('contact')" 
-               class="relative text-gray-700 hover:text-black cursor-pointer transition-colors duration-200 font-medium group">
-              Contact
-              <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-black group-hover:w-full transition-all duration-200"></span>
-            </a>
-            
-            <!-- Download CV Button -->
-            <a href="/assets/cv.pdf" 
-               download="Mario_Silva_CV.pdf"
-               class="ml-4 bg-black text-white px-5 py-2 text-sm font-medium hover:bg-gray-800 transition-all duration-200 hover:shadow-lg flex items-center gap-2 group">
-              <svg class="w-4 h-4 group-hover:translate-y-0.5 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
-              </svg>
-              Download CV
-            </a>
-          </div>
-
-          <!-- Mobile Menu Button -->
-          <button (click)="toggleMenu()" 
-                  class="md:hidden text-black hover:bg-gray-100 p-2 rounded transition-colors duration-200">
-            <svg *ngIf="!isMenuOpen" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
-            </svg>
-            <svg *ngIf="isMenuOpen" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-            </svg>
+      <!-- Desktop navigation -->
+      <div class="hidden md:flex items-center gap-1">
+        @for (link of links; track link.id) {
+          <button
+            type="button"
+            (click)="go(link.id)"
+            [attr.aria-current]="active() === link.id ? 'true' : null"
+            class="relative px-3 py-2 text-sm font-medium transition-colors duration-200 hover:text-black"
+            [class.text-black]="active() === link.id"
+            [class.text-gray-500]="active() !== link.id"
+          >
+            {{ link.label }}
+            <span
+              class="absolute left-3 right-3 bottom-0.5 h-0.5 bg-black origin-left transition-transform duration-300"
+              [class.scale-x-0]="active() !== link.id"
+            ></span>
           </button>
-        </div>
+        }
 
-        <!-- Mobile Menu -->
-        <div *ngIf="isMenuOpen" 
-             class="md:hidden py-4 border-t border-gray-200 animate-fade-in">
-          <a (click)="scrollTo('home')" 
-             class="block py-3 text-gray-700 hover:text-black hover:bg-gray-50 px-2 cursor-pointer transition-all duration-200 font-medium">
-            Home
-          </a>
-          <a (click)="scrollTo('about')" 
-             class="block py-3 text-gray-700 hover:text-black hover:bg-gray-50 px-2 cursor-pointer transition-all duration-200 font-medium">
-            About
-          </a>
-          <a (click)="scrollTo('skills')" 
-             class="block py-3 text-gray-700 hover:text-black hover:bg-gray-50 px-2 cursor-pointer transition-all duration-200 font-medium">
-            Skills
-          </a>
-          <a (click)="scrollTo('projects')" 
-             class="block py-3 text-gray-700 hover:text-black hover:bg-gray-50 px-2 cursor-pointer transition-all duration-200 font-medium">
-            Projects
-          </a>
-          <a (click)="scrollTo('contact')" 
-             class="block py-3 text-gray-700 hover:text-black hover:bg-gray-50 px-2 cursor-pointer transition-all duration-200 font-medium">
-            Contact
-          </a>
-          
-          <!-- Mobile Download CV Button -->
-          <a href="/assets/cv.pdf" 
-             download="Mario_Silva_CV.pdf"
-             class="flex items-center justify-center gap-2 mt-4 bg-black text-white px-5 py-3 text-sm font-medium hover:bg-gray-800 transition-colors duration-200 w-full">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+        <button
+          type="button"
+          (click)="themeService.toggle()"
+          [attr.aria-label]="
+            themeService.theme() === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'
+          "
+          [title]="themeService.theme() === 'dark' ? 'Light mode' : 'Dark mode'"
+          class="ml-3 w-10 h-10 grid place-items-center text-gray-600 hover:text-black hover:bg-gray-100 transition-colors duration-200"
+        >
+          <svg
+            class="w-[18px] h-[18px]"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+          >
+            @if (themeService.theme() === 'dark') {
+              <circle cx="12" cy="12" r="4" />
+              <path
+                stroke-linecap="round"
+                d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32 1.41 1.41M2 12h2m16 0h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"
+              />
+            } @else {
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"
+              />
+            }
+          </svg>
+        </button>
+        @if (profile.cv) {
+          <a
+            [href]="profile.cv"
+            target="_blank"
+            class="group ml-4 bg-black text-white px-4 py-2 text-sm font-medium flex items-center gap-2 hover:bg-gray-800 transition-colors duration-200"
+          >
+            <svg
+              class="w-4 h-4 group-hover:translate-y-0.5 transition-transform duration-200"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
+              />
             </svg>
-            Download CV
+            View CV
           </a>
-        </div>
+        }
       </div>
-    </nav>
+
+      <!-- Mobile controls -->
+      <div class="md:hidden flex items-center gap-1">
+        <button
+          type="button"
+          (click)="themeService.toggle()"
+          [attr.aria-label]="
+            themeService.theme() === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'
+          "
+          [title]="themeService.theme() === 'dark' ? 'Light mode' : 'Dark mode'"
+          class="w-10 h-10 grid place-items-center text-gray-600 hover:text-black hover:bg-gray-100 transition-colors duration-200"
+        >
+          <svg
+            class="w-[18px] h-[18px]"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+          >
+            @if (themeService.theme() === 'dark') {
+              <circle cx="12" cy="12" r="4" />
+              <path
+                stroke-linecap="round"
+                d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32 1.41 1.41M2 12h2m16 0h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"
+              />
+            } @else {
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"
+              />
+            }
+          </svg>
+        </button>
+        <button
+          type="button"
+          (click)="toggleMenu()"
+          class="md:hidden text-black p-2 -mr-2 hover:bg-gray-100 transition-colors duration-200"
+          [attr.aria-expanded]="menuOpen()"
+          aria-controls="mobile-menu"
+          aria-label="Toggle menu"
+        >
+          <svg
+            class="w-6 h-6"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+          >
+            @if (menuOpen()) {
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            } @else {
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M4 7h16M4 12h16M4 17h10"
+              />
+            }
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile menu -->
+    @if (menuOpen()) {
+      <div
+        id="mobile-menu"
+        class="md:hidden container-site pb-5 pt-2 border-t border-gray-200 animate-fade-in"
+      >
+        @for (link of links; track link.id; let i = $index) {
+          <button
+            type="button"
+            (click)="go(link.id)"
+            class="w-full flex items-center gap-4 py-3 px-1 text-left font-medium transition-colors duration-200 hover:text-black"
+            [class.text-black]="active() === link.id"
+            [class.text-gray-500]="active() !== link.id"
+          >
+            <span class="font-mono text-xs text-gray-400">0{{ i + 1 }}</span>
+            {{ link.label }}
+          </button>
+        }
+        @if (profile.cv) {
+          <a
+            [href]="profile.cv"
+            target="_blank"
+            class="flex items-center justify-center gap-2 mt-3 bg-black text-white px-5 py-3 text-sm font-medium hover:bg-gray-800 transition-colors duration-200"
+          >
+            View CV
+          </a>
+        }
+      </div>
+    }
+  </nav>
+
+  <!-- Scroll progress -->
+  <div
+    class="absolute left-0 bottom-0 h-0.5 w-full bg-black origin-left transition-opacity duration-300"
+    [class.opacity-0]="!scrolled()"
+    [style.transform]="'scaleX(' + progress() + ')'"
+    aria-hidden="true"
+  ></div>
+</header>

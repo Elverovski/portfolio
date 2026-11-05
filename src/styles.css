@@ -1,3 +1,233 @@
-/* You can add global styles to this file, and also import other style files */
+@import 'tailwindcss';
 
-@import "tailwindcss";
+@theme {
+  --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  @apply bg-white font-sans text-gray-900;
+}
+
+::selection {
+  background: var(--color-black);
+  color: var(--color-white);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-black);
+  outline-offset: 3px;
+}
+
+/* ---------- Decorative backgrounds ---------- */
+.bg-dot-grid {
+  background-image: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--color-black) 13%, transparent) 1px,
+    transparent 1px
+  );
+  background-size: 22px 22px;
+}
+
+.bg-dot-grid-light {
+  background-image: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--color-white) 12%, transparent) 1px,
+    transparent 1px
+  );
+  background-size: 22px 22px;
+}
+
+.mask-radial {
+  mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, #000 30%, transparent 100%);
+}
+
+/* ---------- Scroll reveal (see Reveal directive) ---------- */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 0.7s cubic-bezier(0.2, 0.7, 0.2, 1),
+    transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* ---------- Hero entrance ---------- */
+@keyframes hero-in {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.hero-in {
+  animation: hero-in 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  animation-delay: var(--d, 0ms);
+}
+
+/* ---------- Typewriter caret ---------- */
+@keyframes caret-blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+.caret {
+  display: inline-block;
+  width: 0.08em;
+  height: 0.9em;
+  margin-left: 0.08em;
+  vertical-align: -0.05em;
+  background: currentColor;
+  animation: caret-blink 1s steps(1) infinite;
+}
+
+/* ---------- Tech marquee ---------- */
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  animation: marquee 70s linear infinite;
+}
+
+.marquee:hover .animate-marquee {
+  animation-play-state: paused;
+}
+
+.mask-x {
+  mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .reveal,
+  .hero-in {
+    opacity: 1;
+    transform: none;
+    transition: none;
+    animation: none;
+  }
+  .animate-marquee,
+  .caret {
+    animation: none;
+  }
+}
+
+/* ---------- Status ping ---------- */
+@keyframes ping-slow {
+  75%,
+  100% {
+    transform: scale(2.4);
+    opacity: 0;
+  }
+}
+
+.animate-ping-slow {
+  animation: ping-slow 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+/* ---------- Dark theme ----------
+   The whole site is built from black / white / gray utilities, so dark mode
+   simply inverts those tokens. Toggled via <html data-theme="dark">. */
+html[data-theme='dark'] {
+  color-scheme: dark;
+  --color-white: #0b0b0c;
+  --color-black: #f4f4f5;
+  --color-gray-50: oklch(17% 0.005 260);
+  --color-gray-100: oklch(22% 0.006 260);
+  --color-gray-200: oklch(29% 0.008 260);
+  --color-gray-300: oklch(38% 0.01 260);
+  --color-gray-400: oklch(56% 0.014 260);
+  --color-gray-500: oklch(66% 0.014 260);
+  --color-gray-600: oklch(75% 0.012 260);
+  --color-gray-700: oklch(83% 0.01 260);
+  --color-gray-800: oklch(89% 0.006 260);
+  --color-gray-900: oklch(94% 0.004 260);
+  --color-gray-950: oklch(97% 0.002 260);
+}
+
+/* Single-colour black logos would disappear on the dark background. */
+html[data-theme='dark'] .icon-mono {
+  filter: invert(1);
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.35s;
+}
+
+/* ---------- Layout that scales with the screen ---------- */
+@utility container-site {
+  width: 100%;
+  max-width: 72rem;
+  margin-inline: auto;
+  @media (width >= 96rem) {
+    max-width: 80rem;
+  }
+}
+
+/* Everything is sized in rem, so on big monitors the whole site scales up
+   proportionally instead of sitting tiny in the middle of the screen. */
+@media (min-width: 1680px) {
+  html {
+    font-size: 106.25%;
+  }
+}
+@media (min-width: 1920px) {
+  html {
+    font-size: 112.5%;
+  }
+}
+@media (min-width: 2400px) {
+  html {
+    font-size: 125%;
+  }
+}
+
+/* ---------- Toast ---------- */
+@keyframes toast-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+}
+
+.toast-in {
+  animation: toast-in 0.25s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+/* ---------- Project card hover ----------
+   The card lifts and gets a solid "thickness": 1px-stepped shadows joined at the
+   corners read as the card's depth (not a separate square), plus a soft drop shadow. */
+.card-extrude {
+  transition:
+    translate 0.3s cubic-bezier(0.2, 0.7, 0.2, 1),
+    box-shadow 0.3s cubic-bezier(0.2, 0.7, 0.2, 1),
+    border-color 0.3s;
+}
+
+.card-extrude:hover {
+  translate: -5px -5px;
+  box-shadow:
+    1px 1px 0 var(--color-black), 2px 2px 0 var(--color-black), 3px 3px 0 var(--color-black), 4px 4px 0 var(--color-black), 5px 5px 0 var(--color-black), 6px 6px 0 var(--color-black), 7px 7px 0 var(--color-black), 8px 8px 0 var(--color-black), 9px 9px 0 var(--color-black), 10px 10px 0 var(--color-black),
+    14px 18px 30px -8px rgb(0 0 0 / 0.28);
+}

@@ -1,6 +1,10 @@
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { Component, signal } from '@angular/core';
+import { FormsModule, NgForm } from '@angular/forms';
+import { PROFILE } from '../data/profile';
+import { Reveal } from '../shared/reveal.directive';
+import { SectionHeader } from '../shared/section-header';
+import { SocialIcon } from '../shared/social-icon';
+import { SocialLinkDirective } from '../shared/social-link.directive';
 
 interface ContactForm {
   name: string;
@@ -8,63 +12,30 @@ interface ContactForm {
   message: string;
 }
 
-interface SocialLink {
-  name: string;
-  url: string;
-  type: 'github' | 'linkedin' | 'twitter' | 'instagram';
-}
-
 @Component({
   selector: 'app-contact',
-  standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [FormsModule, SectionHeader, Reveal, SocialIcon, SocialLinkDirective],
   templateUrl: './contact.html',
-  styleUrls: ['./contact.css']
+  styleUrls: ['./contact.css'],
 })
 export class Contact {
-  formData: ContactForm = {
-    name: '',
-    email: '',
-    message: ''
-  };
+  protected readonly profile = PROFILE;
+  protected readonly sent = signal(false);
+  protected formData: ContactForm = { name: '', email: '', message: '' };
 
-  socialLinks: SocialLink[] = [
-    {
-      name: 'GitHub',
-      url: 'https://github.com/elverovski',
-      type: 'github'
-    },
-    {
-      name: 'LinkedIn',
-      url: 'https://www.linkedin.com/in/mario-enrique-silva-benavides-b884a0396/',
-      type: 'linkedin'
-    },
-    {
-      name: 'Twitter',
-      url: 'https://twitter.com/elverovski',
-      type: 'twitter'
-    },
-    {
-      name: 'Instagram',
-      url: 'https://instagram.com/elverovsky',
-      type: 'instagram'
-    },
-  ];
-
-  onSubmit() {
-    if (this.formData.name && this.formData.email && this.formData.message) {
-      console.log('Form submitted:', this.formData);
-      // TODO: Implement submission logic
-      alert('Message sent! (This is a demo)');
-      this.resetForm();
+  /** No backend: opens the visitor's mail client with the message pre-filled. */
+  protected onSubmit(form: NgForm): void {
+    if (form.invalid) {
+      form.control.markAllAsTouched();
+      return;
     }
-  }
 
-  resetForm() {
-    this.formData = {
-      name: '',
-      email: '',
-      message: ''
-    };
+    const { name, email, message } = this.formData;
+    const subject = encodeURIComponent(`Portfolio contact — ${name}`);
+    const body = encodeURIComponent(`${message}\n\n— ${name} (${email})`);
+    window.location.href = `mailto:${this.profile.email}?subject=${subject}&body=${body}`;
+
+    this.sent.set(true);
+    form.resetForm();
   }
 }

@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, computed, signal } from '@angular/core';
+import { Reveal } from '../shared/reveal.directive';
+import { SectionHeader } from '../shared/section-header';
 
 interface GitHubRepo {
   url: string;
@@ -17,32 +18,14 @@ interface Project {
   expanded?: boolean;
 }
 
-interface Category {
-  name: string;
-  icon: string;
-}
-
 @Component({
   selector: 'app-projects',
-  standalone: true,
-  imports: [CommonModule],
+  imports: [SectionHeader, Reveal],
   templateUrl: './projects.html',
   styleUrls: ['./projects.css'],
 })
 export class Projects {
-  categories: Category[] = [
-    { name: 'All', icon: '' },
-    { name: 'Web', icon: '' },
-    { name: 'Mobile', icon: '' },
-    { name: 'Desktop', icon: '' },
-    { name: 'Games', icon: '' },
-    { name: 'IoT', icon: '' },
-    { name: 'API', icon: '' }
-  ];
-
-  selectedCategory: string = 'All';
-
-  projects: Project[] = [
+  protected readonly projects: Project[] = [
     // Web Apps
     {
       title: 'Assetra',
@@ -70,7 +53,6 @@ export class Projects {
       ],
       expanded: false
     },
-
 
     // IoT
     {
@@ -184,36 +166,27 @@ export class Projects {
       ],
       expanded: false
     }
-
-
-
-
   ];
 
-  get filteredProjects(): Project[] {
-    if (this.selectedCategory === 'All') {
-      return this.projects;
-    }
-    return this.projects.filter(project => project.category === this.selectedCategory);
-  }
+  protected readonly categories = ['All', 'Web', 'Mobile', 'Desktop', 'Games', 'IoT', 'API'];
+  protected readonly selectedCategory = signal('All');
 
-  selectCategory(category: string): void {
-    this.selectedCategory = category;
-  }
+  protected readonly filteredProjects = computed(() => {
+    const category = this.selectedCategory();
+    return category === 'All'
+      ? this.projects
+      : this.projects.filter((p) => p.category === category);
+  });
 
-  toggleDescription(project: Project): void {
+  protected toggleDescription(project: Project): void {
     project.expanded = !project.expanded;
   }
 
-  isString(value: any): boolean {
-    return typeof value === 'string';
-  }
-
-  isArray(value: any): boolean {
-    return Array.isArray(value);
-  }
-
-  asRepoArray(value: any): GitHubRepo[] {
-    return value as GitHubRepo[];
+  /** Normalizes the single-URL / multi-repo shapes into one list. */
+  protected repos(project: Project): GitHubRepo[] {
+    if (!project.github) return [];
+    return typeof project.github === 'string'
+      ? [{ url: project.github, label: 'View Code' }]
+      : project.github;
   }
 }

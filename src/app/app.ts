@@ -6,21 +6,22 @@ import { Skills } from './skills/skills';
 import { Projects } from './projects/projects';
 import { Contact } from './contact/contact';
 import { Footer } from './footer/footer';
+import { Toast } from './shared/toast';
 
 @Component({
   selector: 'app-root',
-  standalone: true,
-  imports: [ Navbar, Home, About, Skills, Projects, Contact, Footer],
+  imports: [Navbar, Home, About, Skills, Projects, Contact, Footer, Toast],
   template: `
-    <div class="min-h-screen bg-white">
-      <app-navbar />
+    <app-navbar />
+    <main>
       <app-home />
       <app-about />
       <app-skills />
       <app-projects />
       <app-contact />
-      <app-footer />
-    </div>
+    </main>
+    <app-footer />
+    <app-toast />
   `
 })
 export class AppComponent {}
