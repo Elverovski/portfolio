@@ -4,19 +4,19 @@
     aria-hidden="true"
   ></div>
 
-  <div class="relative px-4 sm:px-6 lg:px-8 pt-20 pb-10">
+  <div class="relative px-4 sm:px-6 lg:px-8 pt-20">
     <div class="container-site">
       <!-- Big CTA -->
       <div
         class="flex flex-col md:flex-row md:items-end justify-between gap-8 pb-14 mb-14 border-b border-white/15"
       >
         <div>
-          <div class="font-mono text-xs uppercase tracking-[0.2em] text-gray-500 mb-4">
+          <div class="font-mono text-xs uppercase tracking-[0.2em] text-white/60 mb-4">
             What's next?
           </div>
           <h2 class="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight leading-[1.05]">
             Let's build something<br class="hidden sm:block" />{{ ' '
-            }}<span class="text-gray-500">together.</span>
+            }}<span class="text-white/50">together.</span>
           </h2>
         </div>
         <a
@@ -47,7 +47,7 @@
           <div class="text-2xl font-bold tracking-tight mb-4">
             {{ profile.brand }}
           </div>
-          <p class="text-gray-400 mb-6 leading-relaxed">
+          <p class="text-white/70 mb-6 leading-relaxed">
             Developer passionate about creating innovative digital solutions across multiple
             platforms.
           </p>
@@ -59,7 +59,7 @@
                 [title]="
                   social.url ? social.name : social.name + ': ' + social.copy + ' (click to copy)'
                 "
-                class="w-10 h-10 border border-white/20 text-gray-400 grid place-items-center hover:bg-white hover:text-black hover:border-white transition-colors duration-200"
+                class="size-11 border border-white/20 text-white/70 grid place-items-center hover:bg-white hover:text-black hover:border-white transition-colors duration-200"
               >
                 <app-social-icon [type]="social.type" svgClass="w-4 h-4" />
               </a>
@@ -69,16 +69,16 @@
 
         <!-- Navigation -->
         <div>
-          <h4 class="font-mono text-xs uppercase tracking-[0.2em] text-gray-500 mb-5">
+          <h3 class="font-mono text-xs uppercase tracking-[0.2em] text-white/60 mb-5">
             Navigation
-          </h4>
+          </h3>
           <ul class="space-y-1">
             @for (link of links; track link.id) {
               <li>
                 <button
                   type="button"
                   (click)="go(link.id)"
-                  class="group flex items-center py-1.5 text-gray-300 hover:text-white transition-colors duration-200"
+                  class="group flex items-center py-1.5 text-white/80 hover:text-white transition-colors duration-200"
                 >
                   <span
                     class="w-0 group-hover:w-3 group-hover:mr-2 h-px bg-white transition-all duration-200"
@@ -92,12 +92,12 @@
 
         <!-- Interests -->
         <div>
-          <h4 class="font-mono text-xs uppercase tracking-[0.2em] text-gray-500 mb-5">
+          <h3 class="font-mono text-xs uppercase tracking-[0.2em] text-white/60 mb-5">
             Areas of Interest
-          </h4>
+          </h3>
           <ul class="space-y-3">
             @for (interest of interests; track interest) {
-              <li class="text-gray-300 flex items-center gap-2">
+              <li class="text-white/80 flex items-center gap-2">
                 <span class="w-1 h-1 bg-white"></span>
                 {{ interest }}
               </li>
@@ -107,13 +107,13 @@
 
         <!-- Contact -->
         <div>
-          <h4 class="font-mono text-xs uppercase tracking-[0.2em] text-gray-500 mb-5">
+          <h3 class="font-mono text-xs uppercase tracking-[0.2em] text-white/60 mb-5">
             Get In Touch
-          </h4>
+          </h3>
           <div class="space-y-4">
             <a
               [href]="'mailto:' + profile.email"
-              class="block py-2 text-gray-300 hover:text-white transition-colors break-all"
+              class="block py-2 text-white/80 hover:text-white transition-colors break-all"
             >
               {{ profile.email }}
             </a>
@@ -148,12 +148,12 @@
       <div
         class="pt-8 border-t border-white/15 flex flex-col sm:flex-row justify-between items-center gap-4 text-sm"
       >
-        <p class="text-gray-500">© {{ year }} {{ profile.brand }}</p>
-        <p class="text-gray-500 font-mono text-xs">Built with Angular &amp; Tailwind CSS</p>
+        <p class="text-white/60">© {{ year }} {{ profile.brand }}</p>
+        <p class="text-white/60 font-mono text-xs">Built with Angular &amp; Tailwind CSS</p>
         <button
           type="button"
           (click)="go('home')"
-          class="group flex items-center gap-2 py-2 text-gray-400 hover:text-white transition-colors"
+          class="group flex items-center gap-2 py-2 text-white/70 hover:text-white transition-colors"
         >
           Back to top
           <svg
@@ -171,6 +171,16 @@
             />
           </svg>
         </button>
+      </div>
+
+      <!-- Giant wordmark: fills the width (container query units) and is cut by the bottom edge -->
+      <div class="@container mt-12 sm:mt-16 -mb-[0.16em] select-none" aria-hidden="true">
+        <div
+          appReveal
+          class="text-[22cqi] font-bold tracking-tighter leading-[0.78] text-white/10 whitespace-nowrap lowercase"
+        >
+          {{ profile.brand }}
+        </div>
       </div>
     </div>
   </div>

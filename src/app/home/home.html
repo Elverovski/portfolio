@@ -21,17 +21,23 @@
       </div>
 
       <!-- Heading -->
-      <h1 class="hero-in font-bold tracking-tight text-black" style="--d: 80ms">
-        <span class="block text-[clamp(2.25rem,12.5vw,6.5rem)] leading-[0.95] whitespace-nowrap"
-          >Hi, I'm Mario.</span
-        >
-        <span
-          class="block mt-3 sm:mt-4 text-3xl sm:text-5xl md:text-6xl text-gray-400 leading-tight min-h-[2.5em] sm:min-h-[1.25em]"
-          aria-live="off"
-        >
-          {{ displayedText() }}<span class="caret text-black" aria-hidden="true"></span>
-        </span>
+      <h1
+        class="hero-in font-bold tracking-tight text-black text-[clamp(2.25rem,12.5vw,6.5rem)] leading-[0.95] whitespace-nowrap"
+        style="--d: 80ms"
+      >
+        Hi, I'm Mario.
       </h1>
+
+      <!-- Role typewriter (outside the h1 so screen readers get a stable title) -->
+      <p
+        class="hero-in mt-3 sm:mt-4 font-bold tracking-tight text-3xl sm:text-5xl md:text-6xl text-gray-500 leading-tight min-h-[2.5em] sm:min-h-[1.25em]"
+        style="--d: 120ms"
+      >
+        <span class="sr-only">{{ roles.join(', ') }}</span>
+        <span aria-hidden="true"
+          >{{ displayedText() }}<span class="caret text-black"></span
+        ></span>
+      </p>
 
       <!-- Description -->
       <p
@@ -77,7 +83,7 @@
         <button
           type="button"
           (click)="go('contact')"
-          class="border-2 border-black text-black px-7 py-[14px] font-medium flex items-center justify-center gap-2 hover:bg-black hover:text-white transition-colors duration-300"
+          class="border-2 border-black text-black px-7 py-3.5 font-medium flex items-center justify-center gap-2 hover:bg-black hover:text-white transition-colors duration-300"
         >
           Get In Touch
         </button>
@@ -117,6 +123,7 @@
             [src]="skill.icon"
             alt=""
             [class.icon-mono]="skill.mono"
+            [class.icon-lift]="skill.lift"
             class="w-6 h-6 object-contain grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition duration-300"
           />
           <span

@@ -11,14 +11,13 @@
     />
 
     <!-- Category filter -->
-    <div appReveal class="flex flex-wrap gap-2 mb-10" role="tablist" aria-label="Filter projects">
+    <div appReveal class="flex flex-wrap gap-2 mb-10" role="group" aria-label="Filter projects">
       @for (category of categories; track category) {
         <button
           type="button"
-          role="tab"
-          [attr.aria-selected]="selectedCategory() === category"
+          [attr.aria-pressed]="selectedCategory() === category"
           (click)="selectedCategory.set(category)"
-          class="px-4 py-2 border-2 text-sm font-medium transition-colors duration-200"
+          class="min-h-11 px-4 py-2 border-2 text-sm font-medium transition-colors duration-200"
           [class]="
             selectedCategory() === category
               ? 'bg-black text-white border-black'
@@ -68,7 +67,7 @@
                 type="button"
                 (click)="toggleDescription(project)"
                 [attr.aria-expanded]="!!project.expanded"
-                class="self-start mt-1 mb-3 py-2 text-xs font-semibold text-black hover:text-gray-500 transition-colors flex items-center gap-1"
+                class="self-start mt-1 mb-3 min-h-11 text-xs font-semibold text-black hover:text-gray-500 transition-colors flex items-center gap-1"
               >
                 {{ project.expanded ? 'Show less' : 'Read more' }}
                 <svg

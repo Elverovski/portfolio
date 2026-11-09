@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
 import { NAV_LINKS, PROFILE } from '../data/profile';
 import { scrollToSection } from '../shared/scroll';
+import { Reveal } from '../shared/reveal.directive';
 import { SocialIcon } from '../shared/social-icon';
 import { SocialLinkDirective } from '../shared/social-link.directive';
 
 @Component({
   selector: 'app-footer',
-  imports: [SocialIcon, SocialLinkDirective],
+  imports: [Reveal, SocialIcon, SocialLinkDirective],
   templateUrl: './footer.html',
   styleUrl: './footer.css',
 })

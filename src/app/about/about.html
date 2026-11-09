@@ -7,37 +7,47 @@
       subtitle="Software Engineering student & aspiring backend developer."
     />
 
-    <!-- Columns stretch to the same height; the quote sits at the bottom so the left side fills its space -->
+    <!-- Story on the left, quick facts and details on the right -->
     <div class="grid lg:grid-cols-2 gap-14 lg:gap-20">
       <!-- Story -->
-      <div appReveal class="flex flex-col gap-6">
+      <div appReveal class="flex flex-col gap-6 max-w-2xl lg:max-w-none lg:self-start">
         <p class="text-gray-800 leading-relaxed text-xl sm:text-2xl">
-          I'm a motivated software engineering student passionate about software development and
-          building innovative solutions that solve real-world problems.
+          I enjoy building the part users don't see: the APIs, the data and the logic that make
+          an app work.
         </p>
         <p class="text-gray-600 leading-relaxed">
-          I focus on writing clean, efficient code, with a particular interest in backend
-          development — APIs, databases and application architecture. Lately I've been learning
-          Kotlin, Angular and Supabase, and exploring game development with Godot and Blender,
-          while seeking opportunities to apply my knowledge in meaningful projects.
+          Most of my projects are full-stack: a React interface on the front, a Java and Spring
+          Boot API behind it and a SQL or MongoDB database underneath. On the backend I like designing clear REST endpoints and a clean data model,
+          then testing them with Postman before they reach the front end. Outside the web I've
+          built games in Unity (including VR), Raspberry Pi projects with sensors and desktop apps
+          in WPF and JavaFX, which taught me to pick up new tools fast.
         </p>
-        <blockquote
-          class="lg:mt-auto text-lg sm:text-xl leading-relaxed text-gray-700 italic border-l-4 border-black pl-5 py-1"
-        >
-          “Always eager to take on new challenges and collaborate on projects that push the
-          boundaries of what's possible with code.”
+        <p class="text-gray-600 leading-relaxed">
+          Many of my projects were built in teams, so I'm used to sharing a codebase with Git and
+          GitHub, splitting tasks on Trello and documenting what I build so others can build on it.
+          I'm open to opportunities where I can keep growing as a backend developer.
+        </p>
+
+        <!-- Personal motto, same left-bar style as before -->
+        <blockquote class="mt-2 border-l-4 border-black pl-5 py-1">
+          <p class="text-lg sm:text-xl leading-relaxed text-gray-800">
+            “Always eager to take on new challenges and collaborate on projects that push the
+            boundaries of what's possible with code.”
+          </p>
         </blockquote>
       </div>
 
       <!-- Details -->
       <div appReveal [revealDelay]="100" class="space-y-10">
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <div class="grid grid-cols-2 gap-3">
           @for (fact of facts; track fact.label) {
-            <div class="bg-white border border-gray-200 px-4 py-4 sm:last:col-span-2">
-              <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-gray-400 mb-1">
+            <div
+              class="bg-white border border-gray-200 px-3.5 py-3.5 sm:px-4 sm:py-4 [&:last-child:nth-child(odd)]:col-span-2"
+            >
+              <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-gray-500 mb-1">
                 {{ fact.label }}
               </div>
-              <div class="font-semibold text-black">{{ fact.value }}</div>
+              <div class="font-semibold text-black text-balance">{{ fact.value }}</div>
             </div>
           }
         </div>
@@ -55,16 +65,12 @@
         </div>
 
         <div>
-          <h3 class="text-lg font-bold text-black mb-4">What Drives Me</h3>
-          <p class="text-gray-600 leading-relaxed mb-4">
-            I'm constantly learning and challenging myself to grow. Every project is an opportunity
-            to improve my skills and make a real impact.
-          </p>
+          <h3 class="text-lg font-bold text-black mb-4">Also Built</h3>
           <div class="flex flex-wrap gap-2">
-            @for (trait of traits; track trait) {
+            @for (area of alsoBuilt; track area) {
               <span
                 class="px-3 py-1 bg-white border border-gray-200 text-gray-800 text-sm hover:border-black transition-colors"
-                >{{ trait }}</span
+                >{{ area }}</span
               >
             }
           </div>

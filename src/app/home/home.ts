@@ -16,17 +16,18 @@ export class Home implements OnInit, OnDestroy {
   /** Duplicated so the CSS marquee can loop seamlessly. */
   protected readonly marquee = [...ALL_SKILLS, ...ALL_SKILLS];
 
-  private readonly words = [
-    'Backend Developer',
-    'Full Stack Developer',
-    'Mobile Developer',
-    'Software Developer',
-    'Game Developer',
-    'Cloud-Focused Developer',
-    'Cybersecurity Enthusiast',
-    'IT Support Technician',
-    'Problem Solver',
-    'Continuous Learner',
+  /**
+   * Typewriter roles, one per kind of project in the Projects section
+   * (API, Web, Mobile, Games, Desktop, IoT). Backend goes first (main focus)
+   * and is the one shown with reduced motion.
+   */
+  protected readonly roles = [
+    'Backend Developer', // Trackedias API, Spring Boot back ends
+    'Full Stack Developer', // Assetra, Quoi Regarder
+    'Mobile Developer', // Crypto Tracker, Blackjack Chromecast
+    'Game Developer', // Kings and Pigs, Into The Backrooms (VR)
+    'Desktop Developer', // Payment Reminder (WPF), Système Scolaire (JavaFX)
+    'IoT Developer', // Raspberry Pi projects
   ];
 
   protected readonly displayedText = signal('');
@@ -39,11 +40,13 @@ export class Home implements OnInit, OnDestroy {
   private readonly typingSpeed = 85;
   private readonly deletingSpeed = 40;
   private readonly delayBetweenWords = 1600;
+  /** The first word (Backend) stays on screen a bit longer. */
+  private readonly delayFirstWord = 2600;
 
   ngOnInit(): void {
     const reduceMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
     if (reduceMotion) {
-      this.displayedText.set(this.words[0]);
+      this.displayedText.set(this.roles[0]);
       return;
     }
     this.type();
@@ -58,20 +61,20 @@ export class Home implements OnInit, OnDestroy {
   }
 
   private type(): void {
-    const word = this.words[this.wordIndex];
+    const word = this.roles[this.wordIndex];
     let delay = this.isDeleting ? this.deletingSpeed : this.typingSpeed;
 
     if (!this.isDeleting) {
       this.charIndex++;
       if (this.charIndex === word.length) {
         this.isDeleting = true;
-        delay = this.delayBetweenWords;
+        delay = this.wordIndex === 0 ? this.delayFirstWord : this.delayBetweenWords;
       }
     } else {
       this.charIndex--;
       if (this.charIndex === 0) {
         this.isDeleting = false;
-        this.wordIndex = (this.wordIndex + 1) % this.words.length;
+        this.wordIndex = (this.wordIndex + 1) % this.roles.length;
         delay = this.typingSpeed * 3;
       }
     }

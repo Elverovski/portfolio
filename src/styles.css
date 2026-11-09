@@ -62,6 +62,25 @@ body {
   transform: none;
 }
 
+/* Chips inside a revealed block arrive one after another (--i = index, 30ms apart).
+   An animation (not a transition) so it doesn't interfere with the chips' hover lift. */
+@keyframes chip-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+
+.reveal .chip {
+  opacity: 0;
+}
+
+.reveal.is-visible .chip {
+  opacity: 1;
+  animation: chip-in 0.45s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  animation-delay: calc(150ms + var(--i, 0) * 30ms);
+}
+
 /* ---------- Hero entrance ---------- */
 @keyframes hero-in {
   from {
@@ -96,6 +115,11 @@ body {
   animation: caret-blink 1s steps(1) infinite;
 }
 
+/* Logo ">_": its green cursor blinks while hovering the brand button. */
+.group:hover .logo-cursor {
+  animation: caret-blink 1s steps(1) infinite;
+}
+
 /* ---------- Tech marquee ---------- */
 @keyframes marquee {
   to {
@@ -120,6 +144,8 @@ body {
     scroll-behavior: auto;
   }
   .reveal,
+  .reveal .chip,
+  .reveal.is-visible .chip,
   .hero-in {
     opacity: 1;
     transform: none;
@@ -127,8 +153,14 @@ body {
     animation: none;
   }
   .animate-marquee,
-  .caret {
+  .caret,
+  .group:hover .logo-cursor,
+  .animate-ping-slow,
+  .toast-in {
     animation: none;
+  }
+  .card-extrude:hover {
+    translate: none;
   }
 }
 
@@ -165,14 +197,65 @@ html[data-theme='dark'] {
   --color-gray-950: oklch(97% 0.002 260);
 }
 
-/* Single-colour black logos would disappear on the dark background. */
+/* Logo fixes for the dark background. They set Tailwind's filter variables
+   (instead of `filter` directly) so they combine with `grayscale` in the marquee. */
+.icon-mono,
+.icon-lift {
+  filter: var(--tw-blur,) var(--tw-brightness,) var(--tw-contrast,) var(--tw-grayscale,)
+    var(--tw-hue-rotate,) var(--tw-invert,) var(--tw-saturate,) var(--tw-sepia,)
+    var(--tw-drop-shadow,);
+}
+/* Single-colour black logos would disappear. */
 html[data-theme='dark'] .icon-mono {
-  filter: invert(1);
+  --tw-invert: invert(1);
+}
+/* Navy / maroon / dark-grey logos: brighten them a lot. */
+html[data-theme='dark'] .icon-lift {
+  --tw-brightness: brightness(2);
+}
+/* The marquee dims logos to 60%; on the dark background that is too faint. */
+html[data-theme='dark'] .marquee .group:not(:hover) img {
+  opacity: 0.85;
+}
+
+/* The footer is an inverted (black) block: the focus ring must use the opposite token. */
+footer :focus-visible {
+  outline-color: var(--color-white);
+}
+
+/* Theme switch: the new theme spreads softly from the toggle button like a light
+   being turned on — a wide feathered edge instead of a hard circle, plus a slight fade.
+   (--vt-x / --vt-y are set by ThemeService.) Skipped with reduced motion. */
+@property --vt-r {
+  syntax: '<length>';
+  inherits: false;
+  initial-value: 0px;
 }
 
 ::view-transition-old(root),
 ::view-transition-new(root) {
-  animation-duration: 0.35s;
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+::view-transition-new(root) {
+  mask-image: radial-gradient(
+    circle at var(--vt-x, 100%) var(--vt-y, 0),
+    #000 calc(var(--vt-r) - 35vmax),
+    transparent var(--vt-r)
+  );
+  animation: theme-reveal 1.1s cubic-bezier(0.45, 0, 0.25, 1) both;
+}
+
+@keyframes theme-reveal {
+  from {
+    --vt-r: 0px;
+    opacity: 0.4;
+  }
+  to {
+    --vt-r: 190vmax;
+    opacity: 1;
+  }
 }
 
 /* ---------- Layout that scales with the screen ---------- */
@@ -229,5 +312,5 @@ html[data-theme='dark'] .icon-mono {
   translate: -5px -5px;
   box-shadow:
     1px 1px 0 var(--color-black), 2px 2px 0 var(--color-black), 3px 3px 0 var(--color-black), 4px 4px 0 var(--color-black), 5px 5px 0 var(--color-black), 6px 6px 0 var(--color-black), 7px 7px 0 var(--color-black), 8px 8px 0 var(--color-black), 9px 9px 0 var(--color-black), 10px 10px 0 var(--color-black),
-    14px 18px 30px -8px rgb(0 0 0 / 0.28);
+    14px 18px 30px -8px color-mix(in srgb, var(--color-black) 28%, transparent);
 }

@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { LEARNING_SKILLS } from '../data/skills';
 import { Reveal } from '../shared/reveal.directive';
 import { SectionHeader } from '../shared/section-header';
 
@@ -10,21 +9,28 @@ import { SectionHeader } from '../shared/section-header';
   styleUrls: ['./about.css'],
 })
 export class About {
+  /** Concrete things a recruiter can check in the Projects section. */
   protected readonly focus = [
-    'Developing robust and scalable applications',
-    'Designing efficient database solutions',
-    'Following software development best practices',
-    'Learning new technologies and methodologies',
+    'Building REST APIs with Java & Spring Boot',
+    'Python on the backend — Flask, and now FastAPI',
+    'Working with SQL and NoSQL databases through my APIs (PostgreSQL, MongoDB)',
+    'Documenting and testing what I build (Swagger, JUnit 5)',
+    'Writing clean, readable code a team can pick up',
   ];
 
-  protected readonly traits = ['Problem Solver', 'Quick Learner', 'Detail-Oriented', 'Curious'];
+  /** Other areas, each backed by at least one project. */
+  protected readonly alsoBuilt = [
+    'Full-stack web',
+    'Mobile · React Native',
+    'Games · Unity & VR',
+    'IoT · Raspberry Pi',
+    'Desktop · WPF & JavaFX',
+  ];
 
   protected readonly facts = [
     { label: 'Studying', value: 'Software Engineering' },
-    { label: 'Focus', value: 'Backend' },
-    {
-      label: 'Learning',
-      value: LEARNING_SKILLS.map((s) => s.name).join(', '),
-    },
+    { label: 'Focus', value: 'Backend · APIs & data' },
+    { label: 'Experience', value: '4+ years coding' },
+    { label: 'Languages', value: 'Spanish · French · English' },
   ];
 }

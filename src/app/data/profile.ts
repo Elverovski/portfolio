@@ -16,6 +16,12 @@ export const PROFILE = {
   email: 'contact@elverovski.com',
   /** CV page (e.g. 'cv.html'). Empty = the CV buttons stay hidden. */
   cv: '',
+  /**
+   * Web3Forms access key (free, https://web3forms.com): messages from the contact form
+   * arrive straight in your inbox. It is meant to be public. Empty = the form falls back
+   * to opening the visitor's email app (mailto).
+   */
+  web3formsKey: 'b0beb228-2930-428d-8bc7-f5ae834cede3',
   /** Order matters: in Contact the last one takes the full row when the count is odd. */
   socials: <SocialLink[]>[
     {

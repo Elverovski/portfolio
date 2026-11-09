@@ -32,7 +32,7 @@ export class Projects {
       description:
         'Assetra is a financial education and investment platform designed for beginners. It helps users better understand finance, simulate investments, calculate taxes, and make informed decisions through a simple and intuitive interface.',
       technologies: ['React', 'Spring Boot', 'MariaDB'],
-      image: 'assets/projects/assetra.png',
+      image: 'assets/projects/assetra.webp',
       category: 'Web',
       github: [
         { url: 'https://github.com/Lysnne/ProjetFullStack-Frontend', label: 'View Frontend Code' },
@@ -44,7 +44,7 @@ export class Projects {
       title: 'Quoi Regarder',
       description:
         'Quoi Regarder is a movie discovery web application inspired by streaming platforms like Netflix. It allows users to explore trending movies, rate films, and create a personalized watchlist to save movies for later viewing. The platform focuses on providing an intuitive and engaging user experience to help users decide what to watch next.',
-      technologies: ['Spring boot', 'H2', 'React'],
+      technologies: ['Spring Boot', 'H2', 'React'],
       image: 'assets/projects/quoiRegarder.png',
       category: 'Web',
       github: [
@@ -59,7 +59,7 @@ export class Projects {
       title: 'Motion Detection Alarm',
       description: 'A Raspberry Pi-based security alarm system that detects motion using sensors. Built with Python, it provides real-time alerts and monitoring capabilities for home security applications.',
       technologies: ['Python', 'Raspberry Pi', 'GPIO'],
-      image: 'assets/projects/alarm.jpg',
+      image: 'assets/projects/alarm.webp',
       category: 'IoT',
       github: 'https://github.com/Elverovski/ProjetIDO',
       expanded: false
@@ -79,7 +79,7 @@ export class Projects {
       description:
         'A Raspberry Pi-based robot capable of dancing to music through programmed motor sequences. The project focuses on movement synchronization, motor control, and basic robotics principles.',
       technologies: ['Raspberry Pi', 'Python', 'GPIO'],
-      image: 'assets/projects/dancing-robot.png',
+      image: 'assets/projects/dancing-robot.webp',
       category: 'IoT',
       github: 'https://github.com/Elverovski/Dancing-MikuRobot',
       expanded: false
@@ -91,7 +91,7 @@ export class Projects {
       description:
         'Kings and Pigs is a 2D platformer game set in a dark medieval dungeon. The player controls a wandering king trapped inside a dungeon who must find the exit door as quickly as possible. To escape, the king must run, jump, and attack while avoiding deadly traps such as saws and pits, and fighting enemy pigs. The game focuses on fast-paced movement, precision, and tense atmosphere.',
       technologies: ['Unity', 'C#', '2D Game Development'],
-      image: 'assets/projects/kings-and-pigs.png',
+      image: 'assets/projects/kings-and-pigs.webp',
       category: 'Games',
       github: 'https://github.com/Elverovski/Kings-And-Pigs',
       expanded: false
@@ -101,7 +101,7 @@ export class Projects {
       description:
         'Into The Backrooms is a virtual reality horror puzzle game inspired by the Backrooms universe. The player must solve puzzles to progress through levels while avoiding or escaping hostile entities. The game emphasizes immersion, tension, and exploration in unsettling environments, challenging players to survive and find a way out.',
       technologies: ['Unity', 'C#', 'VR', 'Oculus'],
-      image: 'assets/projects/backrooms.png',
+      image: 'assets/projects/backrooms.webp',
       category: 'Games',
       github: 'https://github.com/Elverovski/IntoTheBackrooms',
       expanded: false
@@ -111,7 +111,7 @@ export class Projects {
       description:
         'A single-player Blackjack game designed for mobile devices with Chromecast integration. The player controls the game from a mobile phone while the gameplay is displayed on a TV via Chromecast. The project focuses on game logic, user interaction, and a smooth second-screen experience.',
       technologies: ['JavaScript', 'Chromecast SDK', 'Mobile Web', 'HTML', 'CSS', 'React', 'React Native'],
-      image: 'assets/projects/blackjackChromecast.png',
+      image: 'assets/projects/blackjackChromecast.webp',
       category: 'Games',
       github: [
         { url: 'https://github.com/420-411-MV/cls411-manette19', label: 'View Control Code' },

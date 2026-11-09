@@ -7,59 +7,132 @@
       subtitle="Tools and technologies I use to bring ideas to life — and the ones I'm learning right now."
     />
 
-    <!-- Currently learning: dashed border = "in progress", same language as the NEW chips below -->
-    <div
-      appReveal
-      class="border-2 border-dashed border-gray-300 bg-gray-50/60 p-6 sm:p-8 mb-10"
-    >
-      <div class="mb-6">
-        <div
-          class="flex items-center gap-2 font-mono text-xs uppercase tracking-[0.2em] text-gray-500 mb-2"
-        >
-          <span class="relative flex w-2 h-2">
-            <span class="absolute inset-0 rounded-full bg-green-500 animate-ping-slow"></span>
-            <span class="relative w-2 h-2 rounded-full bg-green-500"></span>
+    <!-- Core (solid, numbered list) next to Learning (dashed, lighter): two different roles, two different looks -->
+    <div class="grid lg:grid-cols-5 gap-5 mb-16">
+      <!-- Core stack -->
+      <div appReveal class="lg:col-span-2 flex flex-col border-2 border-black p-5 sm:p-8">
+        <div class="font-mono text-xs uppercase tracking-[0.2em] text-gray-500 mb-2">Core stack</div>
+        <h3 class="text-2xl sm:text-3xl font-bold tracking-tight text-black mb-6">What I Use Most</h3>
+
+        <ol class="border-t border-gray-200">
+          @for (skill of core; track skill.name) {
+            <li
+              [style.--i]="$index"
+              class="chip group flex items-center gap-4 py-4 border-b border-gray-200"
+            >
+              <span
+                class="size-14 shrink-0 grid place-items-center bg-gray-50 border border-gray-200 group-hover:border-black group-hover:bg-white transition-colors duration-200"
+              >
+                <img
+                  [src]="skill.icon"
+                  alt=""
+                  loading="lazy"
+                  class="w-9 h-9 object-contain group-hover:scale-110 transition-transform duration-200"
+                />
+              </span>
+              <span class="min-w-0">
+                <span class="block text-xl sm:text-2xl font-bold tracking-tight text-black leading-tight">{{
+                  skill.name
+                }}</span>
+                <span class="block mt-1 font-mono text-[11px] uppercase tracking-[0.14em] text-gray-500">{{
+                  coreRole[skill.name]
+                }}</span>
+              </span>
+              <span class="ml-auto font-mono text-sm text-gray-500" aria-hidden="true">0{{ $index + 1 }}</span>
+            </li>
+          }
+        </ol>
+
+        <!-- Databases: used through the backends above, not on their own -->
+        <div class="mt-6 lg:mt-auto lg:pt-6">
+          <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-gray-500 mb-3">Data, through my APIs</div>
+          <div class="flex flex-wrap gap-2">
+            @for (skill of dataLayer; track skill.name) {
+              <span
+                class="flex items-center gap-2 pl-2 pr-2.5 py-1.5 border border-gray-200 bg-white text-sm font-medium text-gray-700"
+              >
+                <img [src]="skill.icon" alt="" loading="lazy" [class.icon-lift]="skill.lift" class="w-4 h-4 object-contain" />
+                {{ skill.name }}
+              </span>
+            }
+          </div>
+        </div>
+      </div>
+
+      <!-- Currently learning: dashed = "in progress", same language as the NEW chips below -->
+      <div appReveal [revealDelay]="90" class="lg:col-span-3 flex flex-col border-2 border-dashed border-gray-400 p-5 sm:p-8">
+        <div class="flex items-center gap-2 font-mono text-xs uppercase tracking-[0.2em] text-gray-500 mb-2">
+          <span class="relative flex w-2 h-2" aria-hidden="true">
+            <span class="absolute inline-flex h-full w-full rounded-full bg-green-500 opacity-60 animate-ping-slow"></span>
+            <span class="relative inline-flex w-2 h-2 rounded-full bg-green-500"></span>
           </span>
           In progress
         </div>
-        <h3 class="text-2xl sm:text-3xl font-bold tracking-tight text-black">Currently Learning</h3>
-      </div>
+        <h3 class="text-2xl sm:text-3xl font-bold tracking-tight text-black mb-6">Currently Learning</h3>
 
-      <div class="grid grid-cols-1 min-[420px]:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
-        @for (skill of learning; track skill.name) {
-          <div
-            class="group flex items-center gap-3 bg-white border border-gray-200 pl-3 pr-4 py-3 hover:border-black hover:-translate-y-0.5 hover:shadow-md transition-all duration-200"
-          >
-            <img
-              [src]="skill.icon"
-              [alt]="skill.name"
-              loading="lazy"
-              class="w-8 h-8 object-contain shrink-0 group-hover:scale-110 transition-transform duration-200"
-            />
-            <div class="min-w-0">
-              <div class="font-semibold text-black leading-tight">{{ skill.name }}</div>
-              <div class="mt-0.5 font-mono text-[10px] uppercase tracking-[0.12em] text-gray-400 truncate">
-                {{ skill.area }}
+        <div class="flex-1 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-2 lg:auto-rows-fr gap-2.5 sm:gap-3">
+          @for (skill of learning; track skill.name) {
+            <div
+              [style.--i]="$index"
+              class="chip group flex items-center gap-2.5 sm:gap-3 border border-dashed border-gray-300 px-2.5 sm:pl-3 sm:pr-4 py-3 hover:border-solid hover:border-black hover:-translate-y-0.5 transition-all duration-200"
+            >
+              <img
+                [src]="skill.icon"
+                [alt]="skill.name"
+                loading="lazy"
+                class="w-7 h-7 object-contain shrink-0 group-hover:scale-110 transition-transform duration-200"
+              />
+              <div class="min-w-0">
+                <div class="font-semibold text-black leading-tight">{{ skill.name }}</div>
+                <div class="mt-0.5 font-mono text-[10px] uppercase tracking-[0.12em] text-gray-500 leading-snug">
+                  {{ skill.area }}
+                </div>
               </div>
             </div>
-          </div>
-        }
+          }
+        </div>
       </div>
     </div>
 
-    <!-- Categories -->
+    <!-- Everything else, by category -->
+    <div class="mb-6">
+      <div class="font-mono text-xs uppercase tracking-[0.2em] text-gray-500 mb-2">By category</div>
+      <h3 class="text-2xl sm:text-3xl font-bold tracking-tight text-black">The Full Toolbox</h3>
+    </div>
     <div class="grid md:grid-cols-2 gap-5">
       @for (category of categories; track category.title; let i = $index) {
         <div appReveal [revealDelay]="(i % 2) * 90" class="md:[&:last-child:nth-child(odd)]:col-span-2">
           <div
-            class="h-full bg-white border-2 border-gray-200 hover:border-black transition-colors duration-300 p-5 sm:p-6"
+            class="group/card h-full bg-white border-2 border-gray-200 hover:border-black transition-colors duration-300 p-5 sm:p-6"
           >
-            <h3 class="text-lg sm:text-xl font-bold text-black mb-5">{{ category.title }}</h3>
+            <div class="flex items-center gap-4 mb-5">
+              <span
+                class="size-11 shrink-0 grid place-items-center border-2 border-gray-200 text-black group-hover/card:bg-black group-hover/card:border-black group-hover/card:text-white transition-colors duration-300"
+                aria-hidden="true"
+              >
+                <svg
+                  class="w-5 h-5"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.75"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  viewBox="0 0 24 24"
+                >
+                  <path [attr.d]="category.icon" />
+                </svg>
+              </span>
+              <div class="min-w-0">
+                <h4 class="text-lg sm:text-xl font-bold text-black leading-tight">{{ category.title }}</h4>
+                <p class="mt-0.5 text-sm text-gray-500">{{ category.blurb }}</p>
+              </div>
+            </div>
 
             <div class="flex flex-wrap gap-2">
               @for (skill of category.skills; track skill.name) {
                 <div
-                  class="group flex items-center gap-2 pl-2.5 pr-3 py-2 border bg-white hover:border-black hover:-translate-y-0.5 hover:shadow-md transition-all duration-200 cursor-default"
+                  [style.--i]="$index"
+                  class="chip group flex items-center gap-2 pl-2.5 pr-3 py-2 border bg-white hover:border-black hover:-translate-y-0.5 hover:shadow-md transition-all duration-200 cursor-default"
                   [class.border-gray-200]="!skill.learning"
                   [class.border-dashed]="skill.learning"
                   [class.border-gray-400]="skill.learning"
@@ -69,6 +142,7 @@
                     [src]="skill.icon"
                     alt=""
                     [class.icon-mono]="skill.mono"
+                    [class.icon-lift]="skill.lift"
                     loading="lazy"
                     class="w-5 h-5 object-contain group-hover:scale-110 transition-transform duration-200"
                   />
@@ -89,19 +163,51 @@
       }
     </div>
 
-    <!-- Stats -->
-    <div
-      appReveal
-      class="mt-16 grid grid-cols-2 md:grid-cols-4 gap-0.5 bg-black border-2 border-black"
-    >
-      @for (stat of stats; track stat.label) {
-        <div class="bg-white px-3 py-6 sm:p-8 text-center">
-          <div class="text-4xl sm:text-5xl font-bold tracking-tight text-black">
-            {{ stat.value }}
+    <!-- By the numbers: same card language as the categories; numbers count up when they scroll into view -->
+    <div class="mt-16 mb-6">
+      <div class="font-mono text-xs uppercase tracking-[0.2em] text-gray-500 mb-2">In short</div>
+      <h3 class="text-2xl sm:text-3xl font-bold tracking-tight text-black">By the Numbers</h3>
+    </div>
+    <div #band appReveal class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5">
+      @for (stat of stats; track stat.label; let i = $index) {
+        <div
+          class="group/stat relative flex flex-col bg-white border-2 border-gray-200 hover:border-black transition-colors duration-300 p-4 sm:p-6"
+        >
+          <div class="flex items-start justify-between gap-3">
+            <span class="font-mono text-[10px] sm:text-xs uppercase tracking-[0.18em] text-gray-500 pt-1">{{
+              stat.label
+            }}</span>
+            <span
+              class="size-9 shrink-0 grid place-items-center border-2 border-gray-200 text-black group-hover/stat:bg-black group-hover/stat:border-black group-hover/stat:text-white transition-colors duration-300"
+              aria-hidden="true"
+            >
+              <svg
+                class="w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.75"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                viewBox="0 0 24 24"
+              >
+                <path [attr.d]="stat.icon" />
+              </svg>
+            </span>
           </div>
-          <div class="mt-2 font-mono text-[10px] sm:text-xs uppercase tracking-[0.12em] sm:tracking-[0.18em] text-gray-500">
-            {{ stat.label }}
+
+          <div class="mt-4 sm:mt-6 text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tighter tabular-nums leading-none text-black">
+            <!-- Screen readers get the final value, not every step of the count-up -->
+            <span class="sr-only">{{ stat.value }}{{ stat.suffix }}</span>
+            <span aria-hidden="true"
+              >{{ shown[i]() }}<span class="text-green-600">{{ stat.suffix }}</span></span
+            >
           </div>
+
+          <span
+            class="mt-4 sm:mt-5 block h-0.5 w-8 bg-green-500 group-hover/stat:w-full transition-[width] duration-500 ease-out"
+            aria-hidden="true"
+          ></span>
+          <p class="mt-3 text-sm text-gray-600 leading-snug">{{ stat.caption }}</p>
         </div>
       }
     </div>

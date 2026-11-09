@@ -8,7 +8,6 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "deploy": "ng build --configuration production --base-href /portfolio/ && npx angular-cli-ghpages --dir=dist/portfolio/browser"
-
   },
   "prettier": {
     "printWidth": 100,
@@ -32,6 +31,7 @@
     "@angular/platform-browser": "^21.0.0",
     "@angular/router": "^21.0.0",
     "lucide-angular": "^0.562.0",
+    "motion": "^14.10.1",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0"
   },
