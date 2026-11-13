@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://elverovski.github.io/portfolio/sitemap.xml
+Sitemap: https://elverovski.com/sitemap.xml
