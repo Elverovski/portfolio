@@ -1,4 +1,4 @@
-import { Injectable, signal } from '@angular/core';
+import { DOCUMENT, Injectable, inject, signal } from '@angular/core';
 
 export type Theme = 'light' | 'dark';
 
@@ -7,8 +7,11 @@ const STORAGE_KEY = 'theme';
 /** Light/dark theme. The initial value is applied in index.html before Angular boots (no flash). */
 @Injectable({ providedIn: 'root' })
 export class ThemeService {
+  /** Injected instead of the global so it also works while prerendering at build time. */
+  private readonly doc = inject(DOCUMENT);
+
   readonly theme = signal<Theme>(
-    document.documentElement.dataset['theme'] === 'dark' ? 'dark' : 'light',
+    this.doc.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light',
   );
 
   /** @param origin the clicked button: the new theme grows in a circle from its centre. */

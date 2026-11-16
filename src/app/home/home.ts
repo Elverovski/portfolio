@@ -1,4 +1,5 @@
-import { Component, OnDestroy, OnInit, signal } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { Component, OnDestroy, OnInit, PLATFORM_ID, inject, signal } from '@angular/core';
 import { ALL_SKILLS } from '../data/skills';
 import { PROFILE } from '../data/profile';
 import { scrollToSection } from '../shared/scroll';
@@ -30,7 +31,12 @@ export class Home implements OnInit, OnDestroy {
     'IoT Developer', // Raspberry Pi projects
   ];
 
-  protected readonly displayedText = signal('');
+  /**
+   * Starts with the first role fully written: that is what the prerendered HTML shows
+   * (and what search engines read), so the page doesn't flash empty when JS loads.
+   */
+  protected readonly displayedText = signal(this.roles[0]);
+  private readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
 
   private wordIndex = 0;
   private charIndex = 0;
@@ -44,12 +50,15 @@ export class Home implements OnInit, OnDestroy {
   private readonly delayFirstWord = 2600;
 
   ngOnInit(): void {
+    // No typing while prerendering (timers would keep the build waiting) or with reduced motion.
+    if (!this.isBrowser) return;
     const reduceMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
-    if (reduceMotion) {
-      this.displayedText.set(this.roles[0]);
-      return;
-    }
-    this.type();
+    if (reduceMotion) return;
+
+    // The first word is already on screen: hold it, then carry on deleting/typing as usual.
+    this.charIndex = this.roles[0].length;
+    this.isDeleting = true;
+    this.timeoutId = setTimeout(() => this.type(), this.delayFirstWord);
   }
 
   ngOnDestroy(): void {

@@ -1,0 +1,29 @@
+# Elverovski
+
+> Portfolio of Elverovski, a software engineering student and backend developer. He builds REST APIs with Java and Spring Boot and full-stack applications with a React front end, and has also shipped games (Unity, VR), mobile apps (React Native), desktop apps (WPF, JavaFX) and Raspberry Pi IoT projects.
+
+- Website: https://elverovski.com/
+- GitHub: https://github.com/Elverovski
+- X: https://x.com/elverovski
+- Contact: contact@elverovski.com (or the contact form on the website)
+- Languages: Spanish, French, English
+
+## Focus
+
+- Main stack: Java and Spring Boot (REST APIs, clean data models, tested with Postman).
+- Also uses: Python, React, TypeScript, Node.js, NestJS, .NET, React Native, Docker, Git and GitHub.
+- Currently learning: Kotlin, Angular, FastAPI, Supabase, Godot and Blender.
+- Coding for 4+ years, often in teams (Git, GitHub, Trello) and documenting what he builds.
+- Open to opportunities to grow as a backend developer.
+
+## Selected projects
+
+- [Assetra](https://github.com/Lysnne/ProjetFullStack-Backend): financial education and investment simulation platform for beginners (React, Spring Boot, MariaDB).
+- [Quoi Regarder](https://github.com/Elverovski/QuoiRegarder_backend): movie discovery web app with ratings and a personal watchlist (React, Spring Boot).
+- [Crypto Tracker App](https://github.com/Elverovski/crypto_tracker): React Native app to follow cryptocurrency prices in real time.
+- [Kings and Pigs](https://github.com/Elverovski/Kings-And-Pigs): 2D platformer game (Unity, C#).
+- [Into The Backrooms (VR)](https://github.com/Elverovski/IntoTheBackrooms): VR horror puzzle game (Unity, C#, Oculus).
+- [Motion Detection Alarm](https://github.com/Elverovski/ProjetIDO): Raspberry Pi motion-detection security alarm in Python.
+- [Système Scolaire](https://github.com/Elverovski/System-Scolaire): JavaFX desktop app to manage students, teachers, courses and salaries.
+
+The full list of projects and skills is on https://elverovski.com/.

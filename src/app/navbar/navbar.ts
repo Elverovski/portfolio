@@ -1,4 +1,4 @@
-import { Component, OnInit, inject, signal } from '@angular/core';
+import { Component, afterNextRender, inject, signal } from '@angular/core';
 import { NAV_LINKS, PROFILE } from '../data/profile';
 import { scrollToSection } from '../shared/scroll';
 import { ThemeService } from '../shared/theme.service';
@@ -13,7 +13,7 @@ import { ThemeService } from '../shared/theme.service';
     '(document:keydown.escape)': 'menuOpen.set(false)',
   },
 })
-export class Navbar implements OnInit {
+export class Navbar {
   protected readonly links = NAV_LINKS;
   protected readonly profile = PROFILE;
   protected readonly themeService = inject(ThemeService);
@@ -23,8 +23,9 @@ export class Navbar implements OnInit {
   protected readonly active = signal('home');
   protected readonly progress = signal(0);
 
-  ngOnInit(): void {
-    this.onScroll();
+  constructor() {
+    // Browser only: reads the scroll position, which doesn't exist while prerendering.
+    afterNextRender(() => this.onScroll());
   }
 
   protected onScroll(): void {

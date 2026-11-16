@@ -1,4 +1,13 @@
-import { Directive, ElementRef, OnDestroy, OnInit, inject, input } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import {
+  Directive,
+  ElementRef,
+  OnDestroy,
+  OnInit,
+  PLATFORM_ID,
+  inject,
+  input,
+} from '@angular/core';
 
 /** Fades/slides an element in the first time it scrolls into view. */
 @Directive({
@@ -9,11 +18,14 @@ export class Reveal implements OnInit, OnDestroy {
   readonly delay = input(0, { alias: 'revealDelay' });
 
   private readonly el = inject<ElementRef<HTMLElement>>(ElementRef);
+  private readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
   private observer?: IntersectionObserver;
 
   ngOnInit(): void {
     const node = this.el.nativeElement;
     if (this.delay()) node.style.transitionDelay = `${this.delay()}ms`;
+    // Prerendering: leave the element hidden so it still animates in once the page loads.
+    if (!this.isBrowser) return;
 
     if (typeof IntersectionObserver === 'undefined') {
       node.classList.add('is-visible');

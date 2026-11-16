@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>Elverovski</title>
+    <title>Elverovski — Backend Developer · Java & Spring Boot</title>
     <base href="/" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta
@@ -11,7 +11,60 @@
     />
     <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#0b0b0c" media="(prefers-color-scheme: dark)" />
+    <meta name="author" content="Elverovski" />
     <link rel="canonical" href="https://elverovski.com/" />
+    <!-- Structured data: tells Google and AI assistants who "Elverovski" is and links his profiles. -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "Person",
+            "@id": "https://elverovski.com/#person",
+            "name": "Elverovski",
+            "url": "https://elverovski.com/",
+            "image": "https://elverovski.com/og-image.png",
+            "email": "mailto:contact@elverovski.com",
+            "jobTitle": "Backend Developer",
+            "description": "Software engineering student and backend developer. Builds REST APIs with Java and Spring Boot, full-stack apps with React, plus games, mobile, desktop and IoT projects.",
+            "knowsAbout": [
+              "Backend development",
+              "REST APIs",
+              "Java",
+              "Spring Boot",
+              "Python",
+              "React",
+              "TypeScript",
+              "Kotlin",
+              "Angular",
+              "FastAPI",
+              "Supabase",
+              "Docker",
+              "Git",
+              "Software engineering"
+            ],
+            "knowsLanguage": ["es", "fr", "en"],
+            "sameAs": ["https://github.com/Elverovski", "https://x.com/elverovski"]
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://elverovski.com/#website",
+            "name": "Elverovski",
+            "url": "https://elverovski.com/",
+            "inLanguage": "en",
+            "author": { "@id": "https://elverovski.com/#person" }
+          },
+          {
+            "@type": "ProfilePage",
+            "@id": "https://elverovski.com/#profile",
+            "url": "https://elverovski.com/",
+            "name": "Elverovski — Backend Developer",
+            "isPartOf": { "@id": "https://elverovski.com/#website" },
+            "mainEntity": { "@id": "https://elverovski.com/#person" }
+          }
+        ]
+      }
+    </script>
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Elverovski" />
     <meta property="og:url" content="https://elverovski.com/" />
